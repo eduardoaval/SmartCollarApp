@@ -4,10 +4,10 @@ import Color from '../../../colors'
 
 const AttackButton = styled.TouchableOpacity`
     background-color: ${Color.redButton};
-    height: 200px;
-    width: 200px;
+    height: 175px;
+    width: 175px;
     margin-vertical: 10px;
-    border-radius: 100px;
+    border-radius: 88px;
     align-items: center;
     justify-content: center;
 `

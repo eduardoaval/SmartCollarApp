@@ -37,19 +37,6 @@ export const HistoryLabelView = styled.View`
     border-radius: 10px;
 `
 
-export const HistoryItemView = styled.View`
-    background-color: ${Color.primary};
-    height: 70px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-width: 2px;
-    border-radius: 40px;
-    border-color: ${Color.secondary}
-    margin-vertical: 10px;
-    margin-horizontal: 4px;
-`
-
 export const AttackView = styled.View`
     background-color: ${Color.secondary};
     flex:1
