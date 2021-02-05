@@ -17,8 +17,8 @@ const AttackText = styled.Text`
     color: ${Color.textSecondary};
 `
 
-export default ({onPress, disabled}) => {
-    return(
+export default ({ onPress, disabled }) => {
+    return (
         <AttackButton onPress={onPress} disabled={disabled}>
             <AttackText>Voltar</AttackText>
         </AttackButton>
