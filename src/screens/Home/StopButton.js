@@ -3,24 +3,24 @@ import styled from 'styled-components/native'
 import Color from '../../../colors'
 
 const AttackButton = styled.TouchableOpacity`
-    background-color: ${Color.redButton};
-    height: 200px;
-    width: 200px;
+    background-color: ${Color.primary};
+    height: 125px;
+    width: 125px;
     margin-vertical: 10px;
-    border-radius: 100px;
+    border-radius: 63px;
     align-items: center;
     justify-content: center;
 `
 
 const AttackText = styled.Text`
-    font-size: 30px;
+    font-size: 25px;
     color: ${Color.textSecondary};
 `
 
 export default ({onPress, disabled}) => {
     return(
         <AttackButton onPress={onPress} disabled={disabled}>
-            <AttackText>Emitir Som</AttackText>
+            <AttackText>Parar Som</AttackText>
         </AttackButton>
     );
 }

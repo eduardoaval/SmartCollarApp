@@ -4,10 +4,13 @@ import { FlatList, StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import { Container, Header, HeaderText, HistoryText, HistoryLabelView, HistoryItemView, AttackView} from './styles'
 import AttackButton from './AttackButton'
 import SoundPlayer from 'react-native-sound-player'
+import BackButton from './BackButton';
+import StopButton from './StopButton';
 
 export default () => {
 
     const [attack, setAttackState] = useState(true);
+    const [playing, setPlaying] = useState(false)
 
     _renderItem = ({item}) => {
         return(
@@ -23,10 +26,31 @@ export default () => {
     
     const _onAttackPress = () => {
         try {
-            alert('play')
             SoundPlayer.playSoundFile('dezoitokhz', 'mp3')
+            setPlaying(true);
         } catch (e) {
-            alert('deu ruim')
+            setPlaying(false);
+            console.log(`cannot play the sound file`, e)
+        }
+    }
+
+    const _onStopPress = () => {
+        try{
+            SoundPlayer.stop()
+            setPlaying(false)
+        }
+        catch (e) {
+            console.log(`cannot play the sound file`, e)
+        }
+    }
+
+    const _onBackPress = () => {
+        try{
+            SoundPlayer.stop()
+            setPlaying(false)
+            setAttackState(false)
+        }
+        catch (e) {
             console.log(`cannot play the sound file`, e)
         }
     }
@@ -41,7 +65,9 @@ export default () => {
                 attack &&
                 <>
                 <AttackView>
-                    <AttackButton onPress={_onAttackPress}/>
+                    <AttackButton onPress={_onAttackPress} />
+                    {playing && <StopButton onPress={_onStopPress}/>}
+                    {playing && <BackButton onPress={_onBackPress}/>}
                 </AttackView>
                 </>
             }
