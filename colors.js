@@ -4,6 +4,7 @@ const Colors = {
   secondary: '#fca311',
   textPrimary: '#fff',
   textSecondary: '#e5e5e5',
-  redButton: '#ff5252'
+  redButton: '#ff5252',
+  blueButton: '#89d1fe'
 };
 module.exports = Colors ;

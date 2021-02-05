@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import Color from '../../../colors'
 
 const AttackButton = styled.TouchableOpacity`
-    background-color: ${Color.secondary};
+    background-color: ${Color.blueButton};
     height: 125px;
     width: 125px;
     margin-vertical: 10px;
