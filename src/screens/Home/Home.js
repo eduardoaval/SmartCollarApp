@@ -3,10 +3,11 @@ import Colors from '../../../colors'
 import { FlatList, StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import { Container, Header, HeaderText, HistoryText, HistoryLabelView, HistoryItemView, AttackView} from './styles'
 import AttackButton from './AttackButton'
+import SoundPlayer from 'react-native-sound-player'
 
 export default () => {
 
-    const [attack, setAttackState] = useState(false);
+    const [attack, setAttackState] = useState(true);
 
     _renderItem = ({item}) => {
         return(
@@ -21,7 +22,13 @@ export default () => {
     }
     
     const _onAttackPress = () => {
-        setAttackState(false);
+        try {
+            alert('play')
+            SoundPlayer.playSoundFile('dezoitokhz', 'mp3')
+        } catch (e) {
+            alert('deu ruim')
+            console.log(`cannot play the sound file`, e)
+        }
     }
 
     return(
