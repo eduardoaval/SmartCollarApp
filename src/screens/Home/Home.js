@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Colors from '../../../colors'
-import { FlatList, StatusBar, Text, TouchableOpacity, View } from 'react-native'
-import { Container, Header, HeaderText, HistoryText, HistoryLabelView, AttackView } from './styles'
+import { FlatList, Image, StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import { Container, Header, HeaderText, HistoryText, HistoryLabelView, AttackView, Logo, DescriptionView, DescriptionInput, DescriptionButton, DescriptionBackButton } from './styles'
 import AttackButton from './AttackButton'
 import SoundPlayer from 'react-native-sound-player'
 import BackButton from './BackButton';
@@ -12,10 +12,12 @@ export default () => {
 
     const [attack, setAttackState] = useState(false);
     const [playing, setPlaying] = useState(false);
+    const [description, setDescription] = useState(false);
+    const [descriptionText, setDescriptionText] = useState('');
 
     _renderItem = ({ item }) => {
         return (
-            <HistoryItemView onPress={_onReceivedNotification} description={item.description}/>
+            <HistoryItemView onPress={() => item.id == '1'?setDescription(true):setAttackState(true)} description={item.description}/>
         );
     }
 
@@ -58,10 +60,10 @@ export default () => {
         <Container>
             <StatusBar barStyle="dark-content" hidden={true} backgroundColor={Colors.primary} translucent={false} />
             <Header>
-                <HeaderText>Smart Collar</HeaderText>
+                <Logo  source={require('./../../images/logo.png')} />
             </Header>
             {
-                attack &&
+                !description && (attack?
                 <>
                     <AttackView>
                         <HistoryText>Você está sendo atacado!!!</HistoryText>
@@ -70,8 +72,7 @@ export default () => {
                         <BackButton onPress={_onBackPress} />
                     </AttackView>
                 </>
-            }
-            {  !attack &&
+                :
                 <>
                     <HistoryLabelView>
                         <HistoryText>Histórico de notificaçoes</HistoryText>
@@ -82,6 +83,21 @@ export default () => {
                         keyExtractor={(item) => item.id}
                         contentContainerStyle={{ flex: 1 }}
                     />
+                </>)
+            }
+            {
+                description && 
+                <>
+                <DescriptionBackButton onPress={() => {setDescription(false); setDescriptionText('')}}>
+                    <HistoryText>Voltar</HistoryText>
+                </DescriptionBackButton>
+                <DescriptionView>
+                    
+                    <DescriptionInput value={descriptionText} onChangeText={(text) => setDescriptionText(text)}/>
+                    <DescriptionButton onPress={() => {setDescription(false); setDescriptionText('')}}>
+                        <HistoryText>Enviar</HistoryText>
+                    </DescriptionButton>
+                </DescriptionView>
                 </>
             }
         </Container>

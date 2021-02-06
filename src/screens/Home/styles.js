@@ -3,20 +3,21 @@ import styled from 'styled-components/native'
 import Color from '../../../colors'
 
 export const Container = styled.SafeAreaView`
-  background-color: ${Color.primary};
+  background-color: ${Color.secondary};
   flex:1
 `
 
 export const Header = styled.View`
-    background-color: ${Color.primary};
+    background-color: ${Color.backgroundColor};
     height: 13%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 `
+
 export const HeaderText = styled.Text`
     font-size: 26px;
-    color: ${Color.textPrimary};
+    color: ${Color.secondary};
 `
 
 export const Body = styled.ScrollView`
@@ -29,12 +30,11 @@ export const HistoryText = styled.Text`
 `
 
 export const HistoryLabelView = styled.View`
-    background-color: ${Color.secondary};
+    background-color: ${Color.primary};
     height: 7%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
 `
 
 export const AttackView = styled.View`
@@ -42,4 +42,46 @@ export const AttackView = styled.View`
     flex:1
     align-items: center;
     justify-content: center;
+`
+
+export const Logo = styled.Image`
+    height: 100px;
+    width: 100px;
+    left: 5px;
+`
+
+export const DescriptionView = styled.View`
+    background-color: ${Color.secondary};
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    margin-horizontal: 20px
+`
+
+export const DescriptionInput = styled.TextInput`
+    width: 100%;
+    border-radius: 30px;
+    height: 70px
+    background-color: ${Color.primary};
+    color: ${Color.textPrimary};
+    font-size: 20px;
+`
+
+export const DescriptionButton = styled.TouchableOpacity`
+    margin-top: 30px;
+    width: 100%;
+    border-radius: 30px;
+    height: 70px
+    background-color: ${Color.primary};
+    color: ${Color.textPrimary};
+    align-items: center;
+    justify-content: center;
+`
+
+export const DescriptionBackButton = styled.TouchableOpacity`
+    background-color: ${Color.primary};
+    height: 7%;
+    flex-direction: row;
+    padding-left: 20px;
+    align-items: center;
 `
