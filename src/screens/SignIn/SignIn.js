@@ -12,7 +12,9 @@ export default () => {
     const [password, setPassword] = useState("");
 
     const _onLoginPressed = () => {
-        navigation.navigate('Home')
+        navigation.reset({
+            routes:[{name:'Home'}]
+        });
     }
 
     return(
