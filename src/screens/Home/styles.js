@@ -61,10 +61,11 @@ export const DescriptionView = styled.View`
 export const DescriptionInput = styled.TextInput`
     width: 100%;
     border-radius: 30px;
-    height: 70px
+    height: 60px
     background-color: ${Color.primary};
     color: ${Color.textPrimary};
-    font-size: 20px;
+    font-size: 16px;
+    padding:10px;
 `
 
 export const DescriptionButton = styled.TouchableOpacity`
@@ -84,4 +85,11 @@ export const DescriptionBackButton = styled.TouchableOpacity`
     flex-direction: row;
     padding-left: 20px;
     align-items: center;
+`
+export const LoadingIcon = styled.ActivityIndicator`
+    margin-top: 50px;
+`;
+
+export const CheckBoxView = styled.View`
+    flex-direction: row;
 `

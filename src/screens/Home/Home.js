@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Colors from '../../../colors'
-import { FlatList, Image, StatusBar, Text, TouchableOpacity, View } from 'react-native'
-import { Container, Header, HeaderText, HistoryText, HistoryLabelView, AttackView, Logo, DescriptionView, DescriptionInput, DescriptionButton, DescriptionBackButton } from './styles'
+import { FlatList, Image, StatusBar, Text, TouchableOpacity } from 'react-native'
+import  CheckBox  from '@react-native-community/checkbox'
+import { Container, Header, HeaderText, HistoryText, HistoryLabelView, AttackView, Logo, DescriptionView, DescriptionInput, DescriptionButton, DescriptionBackButton, LoadingIcon, CheckBoxView } from './styles'
 import AttackButton from './AttackButton'
 import SoundPlayer from 'react-native-sound-player'
 import BackButton from './BackButton';
@@ -14,11 +15,31 @@ export default () => {
     const [playing, setPlaying] = useState(false);
     const [description, setDescription] = useState(false);
     const [descriptionText, setDescriptionText] = useState('');
+    const [historyData, setHistoryData] = useState([]);
+    const [history, setHistory] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [confirm, setConfirm] = useState(true);
+
+    const getHistory = async () => {
+        setLoading(true);
+        setHistoryData([{ description: 'Ataque por cachorro', id: '0' }, { description: 'Ataque por cachorro 2', id: '1' }]);
+
+        setLoading(false);
+    }
+
+    useEffect(()=>{
+        getHistory();
+    }, []);
 
     _renderItem = ({ item }) => {
         return (
-            <HistoryItemView onPress={() => item.id == '1'?setDescription(true):setAttackState(true)} description={item.description}/>
+            <HistoryItemView onPress={() => _onItemPressed(item)} description={item.description}/>
         );
+    }
+
+    _onItemPressed = (item) => {
+        setDescription(true);
+        setHistory(item)
     }
 
     const _onReceivedNotification = () => {
@@ -56,12 +77,32 @@ export default () => {
         }
     }
 
+    const _onSendAttackResponse = () =>{
+        
+        var json =
+        [{
+            device_id: "6008ccff9da25300273d88bd",
+            notification_id: "{950314AB-5E74-4727-AE24-0C28C69BA1DF}",
+            observation: {
+                observation: descriptionText,
+                user_id: "E9E39946-C976-4361-9118-AD9D3AACCB06",
+                confirm: confirm
+            }
+        }
+        ];
+        setDescription(false); 
+        setDescriptionText('');
+    }
+
     return (
         <Container>
             <StatusBar barStyle="dark-content" hidden={true} backgroundColor={Colors.primary} translucent={false} />
             <Header>
                 <Logo  source={require('./../../images/logo.png')} />
             </Header>
+            {loading &&
+                    <LoadingIcon size="large" color="#FFFFFF" />
+                }
             {
                 !description && (attack?
                 <>
@@ -78,7 +119,7 @@ export default () => {
                         <HistoryText>Histórico de notificaçoes</HistoryText>
                     </HistoryLabelView>
                     <FlatList
-                        data={[{ description: 'Ataque por cachorro', id: '0' }, { description: 'Ataque por cachorro 2', id: '1' }]}
+                        data={historyData}
                         renderItem={this._renderItem}
                         keyExtractor={(item) => item.id}
                         contentContainerStyle={{ flex: 1 }}
@@ -93,8 +134,12 @@ export default () => {
                 </DescriptionBackButton>
                 <DescriptionView>
                     
-                    <DescriptionInput value={descriptionText} onChangeText={(text) => setDescriptionText(text)}/>
-                    <DescriptionButton onPress={() => {setDescription(false); setDescriptionText('')}}>
+                    <DescriptionInput value={descriptionText} onChangeText={(text) => setDescriptionText(text)} placeholder="Atacado por cachorro bravo!" multiline={true}/>
+                    <CheckBoxView>
+                        <CheckBox value={confirm} onValueChange={(value) => {setConfirm(value)}}/>
+                        <HistoryText>Confirmar Ataque</HistoryText>
+                    </CheckBoxView>
+                    <DescriptionButton onPress={() => _onSendAttackResponse()}>
                         <HistoryText>Enviar</HistoryText>
                     </DescriptionButton>
                 </DescriptionView>
