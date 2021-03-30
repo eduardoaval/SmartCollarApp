@@ -10,6 +10,8 @@ target 'SmartCollar' do
 
   pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
 
+  pod 'react-native-native-mqtt', :path => '../node_modules/react-native-native-mqtt'
+
   target 'SmartCollarTests' do
     inherit! :complete
     # Pods for testing
