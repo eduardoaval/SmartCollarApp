@@ -42,7 +42,7 @@ export default () => {
     const _onLogoutButtonPressed = async () => {
         await AsyncStorage.removeItem('token');
         await AsyncStorage.removeItem('user');
-        await AsyncStorage.setItem('name');
+        await AsyncStorage.removeItem('name');
         navigation.reset({
             routes:[{name:'SignIn'}]
         });
