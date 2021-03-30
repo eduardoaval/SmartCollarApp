@@ -11,8 +11,6 @@ export async function LoginUser(user, password){
         password: password
     }
 
-    console.log(body)
-
     return fetch(loginRoute, {
         method: 'POST',
         headers: jsonHeader,
@@ -36,7 +34,6 @@ export async function CreateUser(name, user, password){
         body: JSON.stringify(body)
     })
     .then(response => {
-        console.log(response)
         if(response.status == 200)
             return response.json();
     })

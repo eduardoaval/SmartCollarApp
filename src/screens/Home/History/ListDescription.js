@@ -5,7 +5,6 @@ import  CheckBox  from '@react-native-community/checkbox'
 import { Container, Header, HistoryText, Logo, DescriptionView,
      DescriptionInput, DescriptionButton, DescriptionBackButton,
       LoadingIcon, CheckBoxView, Center } from '../styles'
-import HistoryItemView from './HistoryItem'
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default () => {
@@ -13,16 +12,12 @@ export default () => {
     const navigation = useNavigation();
     const route = useRoute();
     const historyData = route.params.item;
-
+    const canEdit = route.params.canEdit;
+    console.log(canEdit)
+    
     const [descriptionText, setDescriptionText] = useState('');
     const [loading, setLoading] = useState(false);
     const [confirm, setConfirm] = useState(true);
-
-    _renderItem = ({ item }) => {
-        return (
-            <HistoryItemView onPress={() => _onItemPressed(item)} description={item.description}/>
-        );
-    }
 
     const _onSendAttackResponse = () =>{
         
@@ -64,7 +59,7 @@ export default () => {
                         <CheckBox value={confirm} onValueChange={(value) => {setConfirm(value)}}/>
                         <HistoryText>Confirmar Ataque</HistoryText>
                     </CheckBoxView>
-                    <DescriptionButton onPress={() => _onSendAttackResponse()}>
+                    <DescriptionButton onPress={() => _onSendAttackResponse()} disabled={!canEdit}>
                         <HistoryText>Enviar</HistoryText>
                     </DescriptionButton>
                 </DescriptionView>

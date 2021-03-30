@@ -20,8 +20,8 @@ export default () => {
         .then(responseJson => {
             if(responseJson)
             {
-                console.log(responseJson);
-                AsyncStorage.setItem('token', responseJson.token)
+                AsyncStorage.setItem('token', responseJson.token);
+                AsyncStorage.setItem('user', username);
                 navigation.reset({
                     routes:[{name:'Home'}]
                 });
@@ -29,7 +29,6 @@ export default () => {
             setLoading(false);
         })
         .catch(error => {
-            console.log(error)
             setLoading(false);
         })
     }
