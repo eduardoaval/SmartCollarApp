@@ -18,7 +18,7 @@ export const GoBackButton = styled.TouchableOpacity`
     height: 30px;
     width: 30px;
     border-radius: 15px;
-    margin-right: 80px;
+    margin-right: 75px;
     margin-left: 20px;
 `
 
@@ -99,4 +99,10 @@ export const LoadingIcon = styled.ActivityIndicator`
 
 export const CheckBoxView = styled.View`
     flex-direction: row;
-`
+`;
+
+export const Center = styled.View`
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px
+`; 

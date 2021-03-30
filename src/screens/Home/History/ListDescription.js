@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Colors from '../../../../colors'
-import { FlatList, StatusBar, View} from 'react-native'
+import { StatusBar, View} from 'react-native'
 import  CheckBox  from '@react-native-community/checkbox'
-import { Container, Header, HeaderText, HistoryText, HistoryLabelView,
-     Logo, DescriptionView, DescriptionInput, DescriptionButton,
-      DescriptionBackButton, LoadingIcon, CheckBoxView, GoBackButton } from '../styles'
+import { Container, Header, HistoryText, Logo, DescriptionView,
+     DescriptionInput, DescriptionButton, DescriptionBackButton,
+      LoadingIcon, CheckBoxView, Center } from '../styles'
 import HistoryItemView from './HistoryItem'
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -44,7 +44,7 @@ export default () => {
         <Container>
             <StatusBar barStyle="dark-content" hidden={true} backgroundColor={Colors.primary} translucent={false} />
             <Header>
-                <View style={{width: 100}}/>
+                <View style={{width: 125}}/>
                 <Logo  source={require('./../../../images/logo.png')} />
             </Header>
             {
@@ -55,7 +55,9 @@ export default () => {
                 <DescriptionBackButton onPress={() => {navigation.goBack()}}>
                     <HistoryText>Voltar</HistoryText>
                 </DescriptionBackButton>
-                <HistoryText>{historyData.description}</HistoryText>
+                <Center>
+                    <HistoryText>{historyData.description}</HistoryText>
+                </Center>
                 <DescriptionView>
                     <DescriptionInput value={descriptionText} onChangeText={(text) => setDescriptionText(text)} placeholder="Atacado por cachorro bravo!" multiline={true}/>
                     <CheckBoxView>

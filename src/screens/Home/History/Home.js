@@ -39,6 +39,11 @@ export default () => {
     }
 
     _onItemPressed = (item) => {
+        if(item.id == '1')
+        {
+            _onReceivedNotification()
+            return;
+        }
         navigation.navigate('ListDescription', {item:item});
     }
 

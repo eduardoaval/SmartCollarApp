@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Colors from '../../../../colors'
-import { StatusBar, } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import { Container, Header, HistoryText,
         AttackView, Logo, LoadingIcon } from '../styles'
 import AttackButton from './Buttons/AttackButton'
@@ -15,10 +15,6 @@ export default () => {
 
     const [playing, setPlaying] = useState(false);
     const [loading, setLoading] = useState(false);
-
-    useEffect(()=>{
-        getHistory();
-    }, []);
 
     const _onAttackPress = () => {
         try {
@@ -44,7 +40,7 @@ export default () => {
         try {
             SoundPlayer.stop()
             setPlaying(false)
-            setAttackState(false)
+            navigation.goBack()
         }
         catch (e) {
             console.log(`cannot play the sound file`, e)
@@ -57,7 +53,7 @@ export default () => {
         <Container>
             <StatusBar barStyle="dark-content" hidden={true} backgroundColor={Colors.primary} translucent={false} />
             <Header>
-                <View style={{width: 100}}/>
+                <View style={{width: 125}}/>
                 <Logo  source={require('./../../../images/logo.png')} />
             </Header>
             {loading ?

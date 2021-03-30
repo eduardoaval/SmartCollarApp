@@ -15,4 +15,5 @@ export const Body = styled.View`
 export const Logo = styled.Image`
     height: 100px;
     width: 100px;
+    border-radius: 50px;
 `
