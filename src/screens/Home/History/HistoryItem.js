@@ -4,7 +4,7 @@ import Color from '../../../../colors'
 
 const HistoryItemView = styled.TouchableOpacity`
     background-color: ${Color.primary};
-    height: 70px;
+    height: 100px;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -13,6 +13,7 @@ const HistoryItemView = styled.TouchableOpacity`
     border-color: ${Color.secondary}
     margin-vertical: 10px;
     margin-horizontal: 4px;
+    padding: 15px;
 `
 
 const HistoryText = styled.Text`

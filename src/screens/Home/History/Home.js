@@ -24,7 +24,6 @@ export default () => {
         //setHistoryData([{ description: 'Ataque por cachorro', id: '0' }, { description: 'Ataque por cachorro 2', id: '1' }]);
         GetUserHistory()
         .then(responseJson => {
-            console.log(responseJson)
             setHistoryData(responseJson)
             setLoading(false);
         })
@@ -83,7 +82,7 @@ export default () => {
                     <FlatList
                         data={historyData}
                         renderItem={this._renderItem}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.notificationId}
                     />
                 </>
         }

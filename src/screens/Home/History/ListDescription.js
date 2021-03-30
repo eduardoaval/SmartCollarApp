@@ -13,7 +13,6 @@ export default () => {
     const route = useRoute();
     const historyData = route.params.item;
     const canEdit = route.params.canEdit;
-    console.log(canEdit)
     
     const [descriptionText, setDescriptionText] = useState('');
     const [loading, setLoading] = useState(false);
