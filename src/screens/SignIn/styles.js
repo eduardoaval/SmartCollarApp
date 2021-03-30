@@ -35,6 +35,7 @@ export const PasswordInput = styled.TextInput`
 export const Logo = styled.Image`
   height: 100px;
   width: 100px;
+  border-radius: 50px
   marginBottom: 20px;
 `
 

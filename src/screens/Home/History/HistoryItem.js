@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import Color from '../../../colors'
+import Color from '../../../../colors'
 
 const HistoryItemView = styled.TouchableOpacity`
     background-color: ${Color.primary};

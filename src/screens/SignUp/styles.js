@@ -39,16 +39,21 @@ export const Logo = styled.Image`
 `
 
 export const LoginButton = styled.TouchableOpacity`
-    background-color: ${Color.primary};
-    height: 125px;
-    width: 125px;
-    margin-vertical: 10px;
-    border-radius: 63px;
-    align-items: center;
-    justify-content: center;
+  background-color: ${Color.primary};
+  height: 70px
+  width: 50%;
+  margin-vertical: 10px;
+  borderRadius: 30px;
+  align-items: center;
+  justify-content: center;
 `
 
 export const LoginText = styled.Text`
     font-size: 25px;
     color: ${Color.textSecondary};
+`
+
+export const LabelText = styled.Text`
+  font-size: 14px;
+  color: ${Color.textPrimary};
 `

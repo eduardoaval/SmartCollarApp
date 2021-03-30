@@ -12,7 +12,14 @@ export const Header = styled.View`
     height: 13%;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+`
+export const GoBackButton = styled.TouchableOpacity`
+    background-color: ${Color.primary};
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    margin-right: 80px;
+    margin-left: 20px;
 `
 
 export const HeaderText = styled.Text`
