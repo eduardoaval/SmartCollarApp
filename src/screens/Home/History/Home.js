@@ -8,6 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { GetUserHistory } from '../../../api/history-service';
 import * as Mqtt from 'react-native-native-mqtt';
+import { request, PERMISSIONS } from 'react-native-permissions';
+import Geolocation from '@react-native-community/geolocation';
+import { calcCrow } from '../../../util/coords';
 
 const client = new Mqtt.Client('tcp://mqtt.tago.io:1883');
 
@@ -32,7 +35,6 @@ export default () => {
             password: '541fb442-cb65-4d32-ad5d-367c49c01832',
             timeout:5,
         }, err => {
-            console.log(err)
         });
 
         client.on(Mqtt.Event.Message, (topic, message) => {
@@ -53,8 +55,8 @@ export default () => {
 
     const _getHistory = async () => {
         setLoading(true);
-        let notifications = await AsyncStorage.getItem('notification');
-        if(notifications)
+        let notifications = await AsyncStorage.getItem('notifications');
+        if(notifications != null)
             setNotificationData(JSON.parse(notifications));
         //setHistoryData([{ description: 'Ataque por cachorro', id: '0' }, { description: 'Ataque por cachorro 2', id: '1' }]);
         GetUserHistory()
@@ -85,25 +87,47 @@ export default () => {
     }
 
     _onItemPressed = (item) => {
-        let canEdit = true;
-        if(item.notificationId && historyData.filter(x=> x.notificationId != item.notificationId) != null)
-            canEdit = false;
+        let canEdit = false;
+        if(item.key != null)
+            canEdit = true;
 
-        navigation.navigate('ListDescription', {item, canEdit});
+        navigation.navigate('ListDescription', {item, canEdit, onNotificationSent:onNotificationSent.bind(this)});
     }
 
-    const _onReceivedNotification = async(topic, message) => {
-        let notifications = notificationData;
-
-        let messageJson = JSON.parse(message);
-        console.log(messageJson);
-
-        notifications.push(messageJson);
-        console.log(notifications);
+    const onNotificationSent = async(notification_id) => {
+        let notificationsString = await AsyncStorage.getItem('notifications');
+        let notifications = notificationsString != null? JSON.parse(notificationsString): [];
+        notifications = notifications.filter(x=> x.notification_id != notification_id);
         await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
         setNotificationData(notifications);
+    }
 
-        navigation.navigate('DogAttack');
+    const _handleLocation = async(notification,) => {
+        let notificationsString = await AsyncStorage.getItem('notifications');
+        let notifications = notificationsString != null? JSON.parse(notificationsString): [];
+        let result = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+        if(result == 'granted')
+        {
+            Geolocation.getCurrentPosition(async(info) => {
+                let distanceKm = calcCrow(notification.location.lat,notification.location.lng,
+                    -3.7711215, -38.511261);
+                if(distanceKm <= 0.1)
+                {
+                    notification.description = "Sem descrição"
+                    notification.key = notifications.length.toString();
+                    notifications.push(notification);
+        
+                    await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
+                    setNotificationData(notifications);
+                    navigation.navigate('DogAttack', {notification:notification});
+                }
+            })
+        }
+    }
+
+    const _onReceivedNotification = (topic, message) => {
+        let messageJson = JSON.parse(message);
+        _handleLocation(messageJson);
     }    
 
     return (
@@ -120,6 +144,24 @@ export default () => {
                     <HistoryLabelView>
                         <HistoryText>Histórico de notificaçoes</HistoryText>
                     </HistoryLabelView>
+                    {
+                        notificationData.length > 0?
+                        <>
+                        <HistoryLabelView>
+                            <HistoryText>Novas notificações</HistoryText>
+                        </HistoryLabelView>
+                        <FlatList
+                            data={notificationData}
+                            renderItem={this._renderItem}
+                            keyExtractor={(item) => item.notificationId}
+                            extraData={notificationData}
+                        />
+                        <HistoryLabelView>
+                            <HistoryText>Histórico</HistoryText>
+                        </HistoryLabelView>
+                        </>
+                        : null
+                    }
                     <FlatList
                         data={historyData}
                         renderItem={this._renderItem}

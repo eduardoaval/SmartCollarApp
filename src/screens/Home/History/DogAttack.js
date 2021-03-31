@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Colors from '../../../../colors'
 import { StatusBar, View } from 'react-native'
 import { Container, Header, HistoryText,
@@ -7,11 +7,13 @@ import AttackButton from './Buttons/AttackButton'
 import SoundPlayer from 'react-native-sound-player'
 import BackButton from './Buttons/BackButton';
 import StopButton from './Buttons/StopButton';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default () => {
 
     const navigation = useNavigation();
+    const route = useRoute();
+    const notificationData = route.params.notification;
 
     const [playing, setPlaying] = useState(false);
     const [loading, setLoading] = useState(false);

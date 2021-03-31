@@ -6,6 +6,8 @@ import { Container, Header, HistoryText, Logo, DescriptionView,
      DescriptionInput, DescriptionButton, DescriptionBackButton,
       LoadingIcon, CheckBoxView, Center } from '../styles'
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { SaveNotification } from '../../../api/history-service';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default () => {
 
@@ -13,25 +15,35 @@ export default () => {
     const route = useRoute();
     const historyData = route.params.item;
     const canEdit = route.params.canEdit;
+    const onNotificationSent = route.params.onNotificationSent;
     
     const [descriptionText, setDescriptionText] = useState('');
     const [loading, setLoading] = useState(false);
     const [confirm, setConfirm] = useState(true);
 
-    const _onSendAttackResponse = () =>{
-        
-        var json =
-        [{
-            device_id: "6008ccff9da25300273d88bd",
-            notification_id: "{950314AB-5E74-4727-AE24-0C28C69BA1DF}",
+    const _onSendAttackResponse = async() =>{
+        setLoading(true)
+        let token = await AsyncStorage.getItem('token');
+        var notification =
+        {
+            device_id: historyData.device_id,
+            notification_id: historyData.notification_id,
             observation: {
                 observation: descriptionText,
-                user_id: "E9E39946-C976-4361-9118-AD9D3AACCB06",
+                token: token,
                 confirm: confirm
             }
         }
-        ];
-        navigation.goBack();
+        SaveNotification(notification)
+        .then((responseJson)=> {
+            onNotificationSent(historyData.notification_id);
+            navigation.goBack();
+            setLoading(false);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+        
     }
 
     return (
