@@ -12,8 +12,7 @@ import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import { calcCrow } from '../../../util/coords';
 
-const client = new Mqtt.Client('tcp://mqtt.tago.io:1883');
-
+const client = new Mqtt.Client('ssl://mqtt.tago.io:8883');
 
 export default () => {
 
@@ -32,8 +31,10 @@ export default () => {
         client.connect({
             clientId: '2008',
             username: user,
+            enableSsl:true,
             password: '541fb442-cb65-4d32-ad5d-367c49c01832',
         }, err => {
+            console.log(err)
         });
 
         client.on(Mqtt.Event.Message, (topic, message) => {
@@ -79,6 +80,7 @@ export default () => {
         await AsyncStorage.removeItem('token');
         await AsyncStorage.removeItem('user');
         await AsyncStorage.removeItem('name');
+        await AsyncStorage.removeItem('notifications');
         navigation.reset({
             routes:[{name:'SignIn'}]
         });
@@ -169,7 +171,7 @@ export default () => {
                         data={historyData}
                         renderItem={this._renderItem}
                         keyExtractor={(item, index) => {
-                            return item.notification_id;
+                            return item.notificationId;
                           }}
                         />
                         </>
