@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Colors from '../../../../colors'
 import { FlatList, StatusBar } from 'react-native'
 import { Container, Header, HistoryText, HistoryLabelView,
-     Logo, LoadingIcon, GoBackButton } from '../styles'
+     Logo, LoadingIcon, GoBackButton, Center } from '../styles'
 import HistoryItemView from './HistoryItem'
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -33,7 +33,6 @@ export default () => {
             clientId: '2008',
             username: user,
             password: '541fb442-cb65-4d32-ad5d-367c49c01832',
-            timeout:5,
         }, err => {
         });
 
@@ -100,6 +99,7 @@ export default () => {
         notifications = notifications.filter(x=> x.notification_id != notification_id);
         await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
         setNotificationData(notifications);
+        _getHistory();
     }
 
     const _handleLocation = async(notification,) => {
@@ -110,7 +110,7 @@ export default () => {
         {
             Geolocation.getCurrentPosition(async(info) => {
                 let distanceKm = calcCrow(notification.location.lat,notification.location.lng,
-                    -3.7711215, -38.511261);
+                    info.coords.latitude, info.coords.longitude);
                 if(distanceKm <= 0.1)
                 {
                     notification.description = "Sem descrição"
@@ -141,9 +141,7 @@ export default () => {
                     <LoadingIcon size="large" color="#FFFFFF" />
                     :
                 <>
-                    <HistoryLabelView>
-                        <HistoryText>Histórico de notificaçoes</HistoryText>
-                    </HistoryLabelView>
+                    
                     {
                         notificationData.length > 0?
                         <>
@@ -153,20 +151,39 @@ export default () => {
                         <FlatList
                             data={notificationData}
                             renderItem={this._renderItem}
-                            keyExtractor={(item) => item.notificationId}
+                            keyExtractor={(item, index) => {
+                                return item.notification_id;
+                              }}
                             extraData={notificationData}
                         />
-                        <HistoryLabelView>
-                            <HistoryText>Histórico</HistoryText>
-                        </HistoryLabelView>
                         </>
                         : null
                     }
-                    <FlatList
+                    {
+                        historyData.length > 0 ?
+                        <>
+                        <HistoryLabelView>
+                            <HistoryText>Histórico de notificaçoes</HistoryText>
+                        </HistoryLabelView>
+                        <FlatList
                         data={historyData}
                         renderItem={this._renderItem}
-                        keyExtractor={(item) => item.notificationId}
-                    />
+                        keyExtractor={(item, index) => {
+                            return item.notification_id;
+                          }}
+                        />
+                        </>
+                        :
+                        <>
+                        <HistoryLabelView>
+                            <HistoryText>Histórico de notificaçoes</HistoryText>
+                        </HistoryLabelView>
+                        <Center>
+                            <HistoryText>Não há notificações no histórico</HistoryText>
+                        </Center>
+                        </>
+                    }
+                    
                 </>
         }
         </Container>

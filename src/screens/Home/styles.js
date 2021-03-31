@@ -37,7 +37,7 @@ export const HistoryText = styled.Text`
 `
 
 export const HistoryLabelView = styled.View`
-    background-color: ${Color.primary};
+    background-color: ${Color.terceary};
     height: 7%;
     flex-direction: row;
     align-items: center;

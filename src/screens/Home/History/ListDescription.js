@@ -33,8 +33,9 @@ export default () => {
                 token: token,
                 confirm: confirm
             }
-        }
-        SaveNotification(notification)
+        };
+        console.log(notification);
+        SaveNotification([notification])
         .then((responseJson)=> {
             onNotificationSent(historyData.notification_id);
             navigation.goBack();

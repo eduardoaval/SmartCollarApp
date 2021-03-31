@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
 
 const getHistoryRoute =  "https://smartcollar.azurewebsites.net/api/notification/user/"
-const saveNotificationRoute =  "https://smartcollar.azurewebsites.net/api/notification/"
+const saveNotificationRoute =  "https://smartcollar.azurewebsites.net/api/notification/updatenotification"
 let jsonHeader = {
     Accept: 'application/json',
     'Content-Type': 'application/json'
@@ -21,13 +21,14 @@ export async function GetUserHistory(){
 }
 
 export async function SaveNotification(body){
-    return fetch(createUserRoute, {
+    return fetch(saveNotificationRoute, {
         method: 'POST',
         headers: jsonHeader,
         body: JSON.stringify(body)
     })
     .then(response => {
+        console.log(response)
         if(response.status == 200)
-            return response.json();
+            return response;
     })
 }
