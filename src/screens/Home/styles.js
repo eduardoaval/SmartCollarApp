@@ -16,10 +16,12 @@ export const Header = styled.View`
 export const GoBackButton = styled.TouchableOpacity`
     background-color: ${Color.primary};
     height: 30px;
-    width: 30px;
+    width: 70px;
     border-radius: 15px;
-    margin-right: 75px;
+    margin-right: 35px;
     margin-left: 20px;
+    align-items: center;
+    justify-content: center;
 `
 
 export const HeaderText = styled.Text`

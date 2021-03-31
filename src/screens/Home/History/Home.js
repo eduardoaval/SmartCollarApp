@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Colors from '../../../../colors'
-import { FlatList, StatusBar } from 'react-native'
+import { FlatList, StatusBar, Text } from 'react-native'
 import { Container, Header, HistoryText, HistoryLabelView,
      Logo, LoadingIcon, GoBackButton, Center } from '../styles'
 import HistoryItemView from './HistoryItem'
@@ -136,7 +136,7 @@ export default () => {
         <Container>
             <StatusBar barStyle="dark-content" hidden={true} backgroundColor={Colors.primary} translucent={false} />
             <Header>
-                <GoBackButton onPress={_onLogoutButtonPressed}/>
+                <GoBackButton onPress={_onLogoutButtonPressed}><Text style={{ color: Colors.backgroundColor}}>Voltar</Text></GoBackButton>
                 <Logo  source={require('./../../../images/logo.png')} />
             </Header>
             {loading ?
